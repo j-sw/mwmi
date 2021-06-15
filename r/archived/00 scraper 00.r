@@ -8,7 +8,7 @@ library(XML)
 options(width=140,stringsAsFactors=FALSE)
 
 ################################################################################
-# Call data.gov.uk API to get list of published data - note that some twat set the return size to 10 by default
+# Call data.gov.uk API to get list of published data - note that the return size is 10 by default
 publication_query <- fromJSON("https://ckan.publishing.service.gov.uk/api/action/package_search?q=%22workforce+management+information%22&rows=200")
 # Structure of return:
 # List of 3:

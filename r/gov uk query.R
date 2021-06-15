@@ -69,10 +69,13 @@ urls <- mwmi_files %>%
 destfiles <- mwmi_files %>%
   filter(data_table_file==TRUE) %$%
   paste0("./raw files/",acronym,"/",file_name)
+currentfiles <- list.files("./raw files",full.names=TRUE,recursive=TRUE)
+
+newfiles <- which(!destfiles %in% currentfiles)
 
 # Maximum files open is ~ 512
-max_files_value <- ceiling((1:length(urls))/80)
-map2(split(urls,max_files_value),split(destfiles,max_files_value),~ {download.file(.x,.y,mode='wb',method='libcurl'); Sys.sleep(.5)})
+max_files_value <- ceiling((1:length(urls[newfiles]))/80)
+map2(split(urls[newfiles],max_files_value),split(destfiles[newfiles],max_files_value),~ {download.file(.x,.y,mode='wb',method='libcurl'); Sys.sleep(.5)})
 
 
 # curl_download(urls[1:5],destfiles[1:5],quiet=FALSE)
